@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Docker Test</title>
+    <link href="index.css" rel="stylesheet" type="text/css" media="all" />
+  </head>
+  <body>
+    <h1>Docker is running!</h1>
+    <h2>Dockerfile</h2>
+    <div class="code-block">
+      FROM nginx:latest <br />
+      COPY index.html src/index.html <br />
+      COPY index.css /usr/share/nginx/html/ <br />
+      RUN apt update && \ <br />
+      apt install vim
+    </div>
+    <h2>docker-compose.yaml</h2>
+    <div class="code-block">
+      version: '3'<br />
+      services:<br />
+      &nbsp;&nbsp;nginx:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;build:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;context: .<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dockerfile: Dockerfile<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;image: nginx:latest<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;container_name: nginx<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;ports:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 8080:80<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;volumes:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ./source:/var/www/html/localhost<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;tty: true<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;stdin_open: true<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;environment:<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- NGINX_HOST=localhost<br />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- NGINX_PORT=80
+    </div>
+  </body>
+</html>
